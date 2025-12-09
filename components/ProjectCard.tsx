@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Maximize2, PlayCircle, ExternalLink } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ExternalLink } from 'lucide-react';
 import * as LucideIcons from 'lucide-react';
 import { Project } from '../types';
 
@@ -43,7 +43,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
     if (project.autoPlay && project.images.length > 1) {
       autoPlayRef.current = window.setInterval(() => {
         setCurrentImage((prev) => (prev + 1) % project.images.length);
-      }, 4000); // Change slide every 4 seconds
+      }, 4000); 
     }
 
     return () => {
@@ -53,13 +53,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-5%" }}
-      transition={{ duration: 0.5, ease: "easeOut", delay: index * 0.1 }}
-      className="w-full mb-16 md:mb-24 last:mb-0"
+      viewport={{ once: true, margin: "-100px" }} // Triggers earlier
+      transition={{ duration: 0.4, ease: "easeOut" }} // Snappy
+      className="w-full mb-8 md:mb-12 last:mb-0"
     >
-      <div className="flex flex-col lg:flex-row bg-white shadow-xl shadow-obsidian-200/50 rounded-lg overflow-hidden border border-obsidian-100">
+      <div className="flex flex-col lg:flex-row bg-white/90 backdrop-blur-sm shadow-xl shadow-obsidian-200/20 rounded-lg overflow-hidden border border-white/50">
         
         {/* Gallery Section */}
         <div className="relative w-full lg:w-3/5 h-[250px] md:h-[450px] bg-obsidian-100 group">
@@ -103,7 +103,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
                </motion.div>
              ))}
              
-             {/* Overlay for non-video interaction hint */}
+             {/* Overlay */}
              <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors duration-500 pointer-events-none z-20" />
           </div>
 
@@ -138,33 +138,33 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, index }) => {
         </div>
 
         {/* Content Section */}
-        <div className="w-full lg:w-2/5 p-6 md:p-12 flex flex-col justify-center bg-white relative">
+        <div className="w-full lg:w-2/5 p-6 md:p-12 flex flex-col justify-center relative">
           {/* Decorative number */}
-          <span className="absolute top-4 left-6 text-6xl md:text-9xl font-serif text-obsidian-50 pointer-events-none select-none">
+          <span className="absolute top-4 left-6 text-5xl md:text-8xl font-serif text-obsidian-100/80 pointer-events-none select-none">
             0{index + 1}
           </span>
 
           <div className="relative z-10">
             <div className="flex items-center gap-3 mb-3 md:mb-4">
-              <span className="p-2 bg-gold-100 text-gold-900 rounded-md">
+              <span className="p-2 bg-gold-100/50 text-gold-900 rounded-md backdrop-blur-sm">
                 <IconComponent size={20} />
               </span>
-              <span className="text-[10px] md:text-xs font-bold tracking-[0.2em] text-gold-500 uppercase">
+              <span className="text-[10px] md:text-xs font-bold tracking-[0.2em] text-gold-600 uppercase">
                 {project.category}
               </span>
             </div>
 
-            <h3 className="text-2xl md:text-4xl font-serif font-bold text-obsidian-900 mb-4 md:mb-6">
+            <h3 className="text-2xl md:text-3xl font-serif font-bold text-obsidian-900 mb-4 md:mb-5">
               {project.title}
             </h3>
 
-            <p className="text-obsidian-600 leading-relaxed font-sans text-base md:text-lg mb-6 md:mb-8">
+            <p className="text-obsidian-600 leading-relaxed font-sans text-sm md:text-base mb-6 md:mb-8">
               {project.description}
             </p>
 
             <div className="flex flex-wrap gap-2 mb-6 md:mb-8">
               {project.techStack.map((tech) => (
-                <span key={tech} className="text-[10px] md:text-xs font-bold text-obsidian-500 border border-obsidian-200 px-3 py-1.5 uppercase tracking-wider">
+                <span key={tech} className="text-[10px] md:text-xs font-bold text-obsidian-500 border border-obsidian-200 px-3 py-1.5 uppercase tracking-wider bg-white/50">
                   {tech}
                 </span>
               ))}
