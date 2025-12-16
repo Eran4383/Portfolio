@@ -4,49 +4,33 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 const MarbleBackground = () => {
   const { scrollYProgress } = useScroll();
   
-  // Dynamic Background Color: Pearl -> Platinum -> Deep Obsidian
+  // Smoother background transition
   const backgroundColor = useTransform(
     scrollYProgress,
-    [0, 0.4, 0.8, 1],
-    ["#F5F5F7", "#E6E6E9", "#1A1A1D", "#050505"]
-  );
-
-  // Dynamic Accent Gradient colors
-  const gradientColor1 = useTransform(
-    scrollYProgress,
     [0, 0.5, 1],
-    ["rgba(197, 160, 40, 0.05)", "rgba(197, 160, 40, 0.1)", "rgba(255, 215, 0, 0.05)"]
+    ["#F5F5F7", "#E6E6E9", "#0a0a0a"]
   );
-
-  // Move a large "Aurora" spotlight across the screen
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "20%"]);
-  const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 1.5, 1]);
 
   return React.createElement(motion.div, {
     style: { backgroundColor },
-    className: "fixed inset-0 z-[-1] overflow-hidden transition-colors duration-500"
+    className: "fixed inset-0 z-[-1] overflow-hidden transition-colors duration-700"
   },
-    // Base Texture - Noise
+    // Elegant gradient blobs instead of heavy noise filter
     React.createElement('div', {
-      className: "absolute inset-0 opacity-[0.04] pointer-events-none",
-      style: { backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }
+      className: "absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-gold-200/20 blur-[100px] animate-float"
     }),
-
-    // The "Living" Light Source
-    React.createElement(motion.div, {
-      style: { 
-        background: gradientColor1,
-        top: y,
-        left: x,
-        scale: scale
-      },
-      className: "absolute w-[150vw] h-[150vw] -translate-x-1/2 -translate-y-1/2 rounded-full blur-[150px] pointer-events-none"
+    React.createElement('div', {
+      className: "absolute bottom-[20%] right-[-5%] w-[40vw] h-[40vw] rounded-full bg-obsidian-200/30 blur-[120px]",
+      style: { animationDuration: '10s' }
     }),
     
-    // Secondary ambient light
-    React.createElement('div', {
-      className: "absolute bottom-0 right-0 w-[80vw] h-[80vw] bg-gradient-to-t from-white/5 to-transparent blur-[100px] pointer-events-none mix-blend-overlay"
+    // Light beam following scroll slightly
+    React.createElement(motion.div, {
+      style: { 
+        top: useTransform(scrollYProgress, [0, 1], ["0%", "40%"]),
+        opacity: useTransform(scrollYProgress, [0, 0.5], [1, 0.3])
+      },
+      className: "absolute left-1/2 -translate-x-1/2 w-[1px] h-[100vh] bg-gradient-to-b from-transparent via-gold-400/20 to-transparent"
     })
   );
 };

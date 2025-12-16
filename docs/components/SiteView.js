@@ -14,46 +14,46 @@ const SiteView = ({ projects, content, onAdminClick, isAdminMode = false }) => {
     React.createElement('main', null,
       React.createElement(Hero, { content: content }),
 
-      /* Skills Strip */
-      React.createElement('div', { className: "py-6 md:py-8 w-full border-y border-obsidian-900/5 bg-white/0 backdrop-blur-[2px]" },
-        React.createElement('div', { className: "max-w-7xl mx-auto px-6 flex flex-wrap justify-center gap-6 md:gap-20" },
+      /* Skills Strip - Now floating */
+      React.createElement('div', { className: "py-6 border-y border-obsidian-900/5 bg-white/30 backdrop-blur-md sticky top-0 z-40 transition-all" },
+        React.createElement('div', { className: "max-w-7xl mx-auto px-6 flex flex-wrap justify-center gap-8" },
           SKILLS.map((skill) => {
             const Icon = LucideIcons[skill.iconName] || LucideIcons.Code;
-            return React.createElement('div', { key: skill.name, className: "flex flex-col items-center gap-2 group cursor-default opacity-70 hover:opacity-100 transition-opacity" },
-              React.createElement(Icon, { className: "w-5 h-5 md:w-6 md:h-6 text-gold-600" }),
-              React.createElement('span', { className: "uppercase tracking-[0.2em] text-[9px] md:text-xs font-bold text-obsidian-800" }, skill.name)
+            return React.createElement('div', { key: skill.name, className: "flex items-center gap-2 text-obsidian-800 opacity-80" },
+              React.createElement(Icon, { className: "w-4 h-4 text-gold-600" }),
+              React.createElement('span', { className: "uppercase tracking-widest text-[10px] font-bold" }, skill.name)
             );
           })
         )
       ),
 
-      /* Projects Section */
-      React.createElement('section', { id: "projects", className: "py-10 md:py-24 px-4 md:px-8 max-w-7xl mx-auto" },
+      /* Projects Section - STACKING CARDS LAYOUT */
+      React.createElement('section', { id: "projects", className: "py-24 px-4 md:px-8 max-w-6xl mx-auto" },
         React.createElement(motion.div, {
-          initial: { opacity: 0, y: 20 },
-          whileInView: { opacity: 1, y: 0 },
-          viewport: { once: true, margin: "-10%" },
-          transition: { duration: 0.6 },
-          className: "mb-12 md:mb-20 text-center"
+          initial: { opacity: 0 },
+          whileInView: { opacity: 1 },
+          viewport: { once: true },
+          className: "mb-20 text-center"
         },
-          React.createElement('span', { className: "text-gold-600 tracking-[0.4em] text-[10px] md:text-xs uppercase font-bold block mb-3" }, "Portfolio"),
-          React.createElement('h2', { className: "text-3xl md:text-6xl font-serif font-bold text-obsidian-900" }, "פרויקטים נבחרים")
+          React.createElement('span', { className: "text-gold-600 tracking-[0.4em] text-xs uppercase font-bold block mb-3" }, "Portfolio"),
+          React.createElement('h2', { className: "text-4xl md:text-6xl font-serif font-bold text-obsidian-900" }, "Selected Works")
         ),
 
-        React.createElement('div', { className: "flex flex-col gap-16 md:gap-32" },
+        // This container holds the sticky cards
+        React.createElement('div', { className: "flex flex-col gap-12 md:gap-0" },
           projects.map((project, index) => (
-            React.createElement(ProjectCard, { key: project.id, project: project, index: index })
+            React.createElement(ProjectCard, { key: project.id, project: project, index: index, total: projects.length })
           ))
         )
       ),
 
       /* Dynamic Quote Section */
-      React.createElement('section', { className: "py-24 md:py-40 px-6 text-white text-center relative overflow-hidden" },
+      React.createElement('section', { className: "py-40 px-6 text-white text-center relative overflow-hidden" },
         React.createElement('div', { className: "relative z-10 max-w-4xl mx-auto" },
-          React.createElement('h3', { className: "text-2xl md:text-5xl font-serif leading-tight mb-8 md:mb-10 whitespace-pre-line text-white/90 drop-shadow-lg" },
+          React.createElement('h3', { className: "text-3xl md:text-6xl font-serif leading-tight mb-10 text-white drop-shadow-2xl" },
             content.quoteText
           ),
-          React.createElement('div', { className: "inline-block border border-gold-500/50 px-6 py-2 rounded-full text-gold-400 font-mono text-sm bg-black/20 backdrop-blur-md" },
+          React.createElement('div', { className: "inline-block border border-white/20 px-8 py-3 rounded-full text-gold-300 font-mono text-sm bg-black/40 backdrop-blur-xl" },
             content.quoteAuthor
           )
         )
