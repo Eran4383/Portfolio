@@ -1,38 +1,21 @@
 # הוראות התקנה והעלאה (Deployment Instructions)
 
-כדי שהאתר יעבוד בחינם באמצעות GitHub ו-Vercel, עקוב אחר ההוראות הבאות:
+האתר בנוי לעבוד בצורה סטטית מלאה מתוך תיקיית `docs`, ללא צורך בתהליך Build מורכב ב-Vercel או במחשב האישי.
 
-## 1. הכנה ב-GitHub
-1. צור **Repository** חדש ב-GitHub (לדוגמה: `portfolio`).
-2. וודא שהוא מוגדר כ-`Public` (ציבורי) כדי ש-Vercel תוכל לגשת אליו בגרסה החינמית בקלות.
-3. דחוף את כל הקבצים שנוצרו כאן לתוך ה-Repository. 
-   
-   *הערה טכנית*: מכיוון שאני מספק לך את קוד המקור ללא `package.json`, עליך ליצור פרויקט Vite בסיסי במחשב שלך ולהעתיק את הקבצים שלי פנימה.
-   
-   **פקודות ליצירת הפרויקט במחשב שלך:**
-   ```bash
-   npm create vite@latest my-portfolio -- --template react-ts
-   cd my-portfolio
-   npm install lucide-react framer-motion clsx tailwind-merge
-   # העתק את הקבצים שלי לתיקייה זו (החלף את הקיים)
-   ```
+## 1. העלאה ל-GitHub
+1. צור **Repository** חדש ב-GitHub.
+2. העלה את כל הקבצים (כולל תיקיית `docs` והקבצים שבתוכה) ל-Repository.
 
-## 2. הגדרות Vercel
-1. הירשם ל-[Vercel](https://vercel.com) והתחבר עם חשבון ה-GitHub שלך.
-2. לחץ על **"Add New..."** -> **"Project"**.
-3. בחר את ה-Repository שיצרת ב-GitHub ולחץ **Import**.
-4. **Build and Output Settings**:
-   - Vercel לרוב מזהה אוטומטית שזה פרויקט Vite.
-   - וודא שפקודת ה-Build היא: `vite build` (או `npm run build`).
-   - וודא שתיקיית הפלט (Output Directory) היא: `dist`.
-5. לחץ על **Deploy**.
+## 2. הגדרת GitHub Pages (חשוב!)
+כדי שהאתר יעבוד ולא תקבל שגיאת 404, עליך להגדיר את GitHub Pages לשרת את הקבצים מתוך התיקייה הנכונה:
 
-## 3. הגדרות Environment (אם נדרש)
-בפרויקט הנוכחי, אין שימוש ב-API Keys סודיים (כמו Gemini API Key) בצד השרת, שכן זהו אתר סטטי (Client Side). לכן, **אין צורך** להגדיר משתני סביבה (Environment Variables) ב-Vercel עבור גרסה זו.
+1. היכנס ללשונית **Settings** ב-Repository שלך.
+2. בתפריט הצד, לחץ על **Pages**.
+3. תחת הכותרת **Build and deployment**:
+   - וודא ש-**Source** מוגדר ל-`Deploy from a branch`.
+   - תחת **Branch**, בחר ב-`main` (או `master`).
+   - **שינוי קריטי**: בתיבה שליד שם ה-Branch, שנה את התיקייה מ-`/(root)` ל-**`/docs`**.
+4. לחץ על **Save**.
 
-אם בעתיד תרצה לחבר את ה-API של Gemini (למשל לצ'אטבוט באתר):
-1. ב-Vercel, לך ללשונית **Settings** -> **Environment Variables**.
-2. הוסף מפתח בשם `VITE_GEMINI_API_KEY` ואת הערך שלו.
-3. בקוד, גש אליו דרך `import.meta.env.VITE_GEMINI_API_KEY`.
-
-בהצלחה! האתר יהיה זמין בכתובת שתסתיים ב-`.vercel.app`.
+## 3. סיום
+לאחר מספר דקות, הקישור לאתר שלך יופיע בחלק העליון של עמוד ה-Pages. האתר יעבוד כעת בצורה תקינה.
