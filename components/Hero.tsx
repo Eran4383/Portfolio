@@ -9,56 +9,76 @@ interface HeroProps {
 
 const Hero: React.FC<HeroProps> = ({ content }) => {
   return (
-    <section className="relative min-h-screen flex flex-col justify-start pt-20 md:pt-[15vh] pb-8 items-center text-center px-4 overflow-hidden">
+    <section className="relative min-h-[100dvh] w-full flex flex-col justify-center items-center text-center px-4 overflow-hidden py-10">
       
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.2, ease: "easeOut" }}
-        className="z-10 max-w-5xl"
-      >
-        <h2 className="text-sm md:text-2xl font-sans tracking-[0.3em] text-gold-500 font-bold uppercase mb-4 md:mb-6">
-           Shay Kalimi
-        </h2>
+      {/* Main Content Group */}
+      <div className="z-10 max-w-4xl flex flex-col items-center gap-6 md:gap-8">
         
-        <h1 className="text-3xl md:text-7xl lg:text-8xl font-serif font-bold text-obsidian-950 mb-4 md:mb-6 leading-tight">
-          {content.heroTitle} <br/>
-          <span className="text-gradient-shimmer animate-shimmer block mt-2 md:mt-0">
-             {content.heroSubtitle}
+        {/* Name Tag */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <span className="px-4 py-1.5 border border-obsidian-200 rounded-full text-xs md:text-sm font-sans tracking-widest text-obsidian-500 font-bold uppercase bg-white/50 backdrop-blur-sm">
+            Shay Kalimi
           </span>
-        </h1>
+        </motion.div>
 
-        <div className="w-12 md:w-24 h-0.5 md:h-1 bg-gold-400 mx-auto my-6 md:my-10 opacity-60"></div>
+        {/* Titles */}
+        <div>
+          <motion.h1
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            className="text-5xl md:text-8xl font-serif font-bold text-obsidian-900 leading-[1.1]"
+          >
+            {content.heroTitle}
+          </motion.h1>
+          
+          <motion.h2
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3, duration: 1 }}
+            className="text-3xl md:text-6xl font-serif font-bold text-gold-600 mt-2 block"
+          >
+            {content.heroSubtitle}
+          </motion.h2>
+        </div>
 
-        <h3 className="text-xl md:text-4xl font-serif italic text-obsidian-800 mb-6 md:mb-8 font-light tracking-wide">
-          "Architecting the Digital Future"
-        </h3>
-
-        <p className="text-sm md:text-xl text-obsidian-600 max-w-3xl mx-auto font-sans leading-relaxed mb-8 md:mb-12 whitespace-pre-line px-2">
+        {/* Description */}
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.8 }}
+          className="text-base md:text-xl text-obsidian-600 max-w-xl mx-auto font-sans leading-relaxed whitespace-pre-line"
+        >
           {content.heroDescription}
-        </p>
+        </motion.p>
 
-        <div className="flex flex-col md:flex-row gap-6 justify-center">
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+        {/* CTA Button & Arrow Group - Tightly coupled */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.7, duration: 0.5 }}
+          className="flex flex-col items-center gap-6 mt-4"
+        >
+          <button
             onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-            className="px-8 md:px-12 py-3 md:py-4 bg-obsidian-950 text-white rounded-none border border-obsidian-950 hover:bg-transparent hover:text-obsidian-950 transition-all duration-300 font-bold tracking-widest uppercase shadow-xl text-xs md:text-base"
+            className="px-10 py-4 bg-obsidian-900 text-white rounded-full hover:bg-gold-500 hover:scale-105 transition-all duration-300 font-bold tracking-widest uppercase text-xs md:text-sm shadow-xl"
           >
             לצפייה בפרויקטים
-          </motion.button>
-        </div>
-      </motion.div>
+          </button>
 
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 1 }}
-        className="absolute bottom-6 left-1/2 transform -translate-x-1/2 animate-bounce cursor-pointer text-gold-500/50 hover:text-gold-500 transition-colors"
-        onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-      >
-        <ChevronDown size={24} />
-      </motion.div>
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="text-obsidian-300 cursor-pointer"
+          >
+            <ChevronDown size={24} />
+          </motion.div>
+        </motion.div>
+      </div>
     </section>
   );
 };

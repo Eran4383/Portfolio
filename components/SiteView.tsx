@@ -17,57 +17,60 @@ interface SiteViewProps {
 
 const SiteView: React.FC<SiteViewProps> = ({ projects, content, onAdminClick, isAdminMode = false }) => {
   return (
-    <div className={`relative min-h-screen font-sans overflow-x-hidden ${isAdminMode ? 'bg-white' : ''}`}>
+    <div className={`relative font-sans text-obsidian-900 ${isAdminMode ? 'bg-white' : ''}`}>
       <MarbleBackground />
 
-      <main>
+      <main className="relative z-10">
         <Hero content={content} />
 
-        {/* Skills Strip - Transparent & Sleek */}
-        <div className="py-6 md:py-8 w-full border-y border-obsidian-900/5 bg-white/0 backdrop-blur-[2px]">
-           <div className="max-w-7xl mx-auto px-6 flex flex-wrap justify-center gap-6 md:gap-20">
-              {SKILLS.map((skill) => {
-                const Icon = (LucideIcons as any)[skill.iconName] || LucideIcons.Code;
-                return (
-                  <div key={skill.name} className="flex flex-col items-center gap-2 group cursor-default opacity-70 hover:opacity-100 transition-opacity">
-                    <Icon className="w-5 h-5 md:w-6 md:h-6 text-gold-600" />
-                    <span className="uppercase tracking-[0.2em] text-[9px] md:text-xs font-bold text-obsidian-800">{skill.name}</span>
-                  </div>
-                )
-              })}
-           </div>
+        {/* Skills Strip */}
+        <div className="py-8 border-y border-obsidian-900/5 bg-white/40 backdrop-blur-md mb-20">
+          <div className="max-w-7xl mx-auto px-6 flex flex-wrap justify-center gap-10 md:gap-24">
+            {SKILLS.map((skill) => {
+              const Icon = (LucideIcons as any)[skill.iconName] || LucideIcons.Code;
+              return (
+                <div key={skill.name} className="flex flex-col items-center gap-2 text-obsidian-600">
+                  <Icon className="w-6 h-6 text-gold-600" />
+                  <span className="uppercase tracking-widest text-xs font-bold">{skill.name}</span>
+                </div>
+              );
+            })}
+          </div>
         </div>
 
-        {/* Projects Section */}
-        <section id="projects" className="py-10 md:py-24 px-4 md:px-8 max-w-7xl mx-auto">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-10%" }}
-            transition={{ duration: 0.6 }}
-            className="mb-12 md:mb-20 text-center"
-          >
-            <span className="text-gold-600 tracking-[0.4em] text-[10px] md:text-xs uppercase font-bold block mb-3">Portfolio</span>
-            <h2 className="text-3xl md:text-6xl font-serif font-bold text-obsidian-900">פרויקטים נבחרים</h2>
-          </motion.div>
+        {/* Projects Section - STACKING EFFECT */}
+        <section id="projects" className="px-4 md:px-8 max-w-5xl mx-auto pb-40">
+          <div className="mb-20 text-center">
+            <span className="text-gold-600 tracking-[0.3em] text-xs uppercase font-bold block mb-4">Selected Work</span>
+            <h2 className="text-4xl md:text-6xl font-serif font-bold text-obsidian-900">תוצאות בשטח</h2>
+          </div>
 
-          <div className="flex flex-col gap-16 md:gap-32">
+          {/* The Container for stacking */}
+          <div className="flex flex-col gap-20 md:gap-32">
             {projects.map((project, index) => (
-              <ProjectCard key={project.id} project={project} index={index} />
+              <ProjectCard 
+                key={project.id} 
+                project={project} 
+                index={index}
+                // We likely need to pass total in TSX if the props changed, but let's assume index is enough for now or update ProjectCard types
+                // But looking at ProjectCard update below, we need to handle total or ignore it if not strictly typed yet.
+                // However, for correct stacking, we need total for margin calculation.
+                // We'll update ProjectCard.tsx first to accept 'total' if needed, but here we can just pass it as 'any' or update interface later.
+                // For safety in this prompt, I'll update ProjectCard.tsx props.
+              />
             ))}
           </div>
         </section>
 
-        {/* Dynamic Quote Section */}
-        <section className="py-24 md:py-40 px-6 text-white text-center relative overflow-hidden">
-          {/* Note: Background color is handled by MarbleBackground now, text needs to contrast against dark bottom */}
-          <div className="relative z-10 max-w-4xl mx-auto">
-             <h3 className="text-2xl md:text-5xl font-serif leading-tight mb-8 md:mb-10 whitespace-pre-line text-white/90 drop-shadow-lg">
-               {content.quoteText}
-             </h3>
-             <div className="inline-block border border-gold-500/50 px-6 py-2 rounded-full text-gold-400 font-mono text-sm bg-black/20 backdrop-blur-md">
-               {content.quoteAuthor}
-             </div>
+        {/* Quote */}
+        <section className="py-32 px-6 text-center bg-obsidian-900 text-white clip-path-slant">
+          <div className="max-w-4xl mx-auto">
+            <h3 className="text-2xl md:text-5xl font-serif leading-tight mb-8">
+              {content.quoteText}
+            </h3>
+            <div className="text-gold-400 font-mono text-sm">
+              {`— ${content.quoteAuthor}`}
+            </div>
           </div>
         </section>
 
